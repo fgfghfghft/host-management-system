@@ -170,6 +170,10 @@ fi
 # 步骤8: 收集静态文件
 print_step "8. 收集静态文件..."
 
+# 创建静态文件目录
+mkdir -p static
+mkdir -p staticfiles
+
 python manage.py collectstatic --noinput
 
 # 步骤9: 创建启动脚本
