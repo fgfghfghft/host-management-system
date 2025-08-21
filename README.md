@@ -48,58 +48,13 @@ curl -sSL https://raw.githubusercontent.com/fgfghfghft/host-management-system/ma
 
 ## 手动部署
 
-### 1. 环境准备
-
 ```bash
-# 创建虚拟环境
-python3 -m venv venv
-source venv/bin/activate
+# 克隆项目
+git clone https://github.com/fgfghfghft/host-management-system.git
+cd host-management-system
 
-# 安装依赖
-pip install django celery redis cryptography djangorestframework
-```
-
-### 2. 启动Redis服务
-
-```bash
-# Ubuntu/Debian
-sudo apt-get install redis-server
-sudo systemctl start redis-server
-
-# 或者使用Docker
-docker run -d -p 6379:6379 redis:latest
-```
-
-### 3. 数据库迁移
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### 4. 创建超级用户
-
-```bash
-python manage.py createsuperuser
-```
-
-### 5. 初始化测试数据
-
-```bash
-python manage.py init_data
-```
-
-### 6. 启动服务
-
-```bash
-# 启动Django开发服务器
-python manage.py runserver
-
-# 启动Celery Worker (新终端)
-celery -A host_management worker -l info
-
-# 启动Celery Beat (新终端)
-celery -A host_management beat -l info
+# 运行部署脚本
+./deploy.sh
 ```
 
 ## API接口
