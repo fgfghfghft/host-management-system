@@ -22,24 +22,11 @@
 - **数据库**: SQLite (可替换为MySQL/PostgreSQL)
 - **密码加密**: cryptography 45.0.6
 
-## 🚀 一键部署（推荐）
-
-### 方法一：直接运行（最简单）
+## 🚀 一键部署
 
 ```bash
 # 一行命令完成部署
 curl -sSL https://raw.githubusercontent.com/fgfghfghft/host-management-system/master/deploy.sh | bash
-```
-
-### 方法二：下载后运行
-
-```bash
-# 克隆项目
-git clone https://github.com/fgfghfghft/host-management-system.git
-cd host-management-system
-
-# 运行部署脚本
-./deploy.sh
 ```
 
 部署完成后，系统会自动：
@@ -62,6 +49,15 @@ cd host-management-system
 ## 手动部署
 
 ### 1. 环境准备
+
+```bash
+# 创建虚拟环境
+python3 -m venv venv
+source venv/bin/activate
+
+# 安装依赖
+pip install django celery redis cryptography djangorestframework
+```
 
 ### 2. 启动Redis服务
 
