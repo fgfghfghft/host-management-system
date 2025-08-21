@@ -22,10 +22,23 @@
 - **数据库**: SQLite (可替换为MySQL/PostgreSQL)
 - **密码加密**: cryptography 45.0.6
 
-## 🚀 一键部署
+## 🚀 快速部署
+
+### 方法一：克隆后部署
 
 ```bash
-# 一行命令完成部署
+# 克隆项目
+git clone https://github.com/fgfghfghft/host-management-system.git
+cd host-management-system
+
+# 运行部署脚本
+./deploy.sh
+```
+
+### 方法二：直接运行部署脚本
+
+```bash
+# 下载并运行部署脚本
 curl -sSL https://raw.githubusercontent.com/fgfghfghft/host-management-system/master/deploy.sh | bash
 ```
 
@@ -43,19 +56,6 @@ curl -sSL https://raw.githubusercontent.com/fgfghfghft/host-management-system/ma
 **访问地址**：
 - 管理后台：`http://localhost:8000/admin/`
 - API接口：`http://localhost:8000/api/`
-
----
-
-## 手动部署
-
-```bash
-# 克隆项目
-git clone https://github.com/fgfghfghft/host-management-system.git
-cd host-management-system
-
-# 运行部署脚本
-./deploy.sh
-```
 
 ## API接口
 
