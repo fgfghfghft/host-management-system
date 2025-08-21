@@ -24,7 +24,7 @@
 
 ## 🚀 快速部署
 
-### 方法一：克隆后部署
+### 方法一：使用部署脚本
 
 ```bash
 # 克隆项目
@@ -35,19 +35,33 @@ cd host-management-system
 ./deploy.sh
 ```
 
-### 方法二：直接运行部署脚本
+### 方法二：手动部署
 
 ```bash
-# 下载并运行部署脚本
-curl -sSL https://raw.githubusercontent.com/fgfghfghft/host-management-system/master/deploy.sh | bash
-```
+# 克隆项目
+git clone https://github.com/fgfghfghft/host-management-system.git
+cd host-management-system
 
-部署完成后，系统会自动：
-- ✅ 安装所有依赖
-- ✅ 配置数据库
-- ✅ 创建管理员账号
-- ✅ 初始化测试数据
-- ✅ 启动所有服务
+# 创建虚拟环境
+python3 -m venv venv
+source venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 数据库迁移
+python manage.py makemigrations
+python manage.py migrate
+
+# 创建超级用户
+python manage.py createsuperuser
+
+# 初始化测试数据
+python manage.py init_data
+
+# 启动服务
+python manage.py runserver
+```
 
 **默认管理员账号**：
 - 用户名：`admin`
