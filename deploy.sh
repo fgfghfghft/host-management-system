@@ -38,6 +38,27 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 # 获取当前目录
+CURRENT_DIR=$(pwd)
+print_message "当前目录: $CURRENT_DIR"
+
+# 检查是否在项目目录中
+if [ ! -f "manage.py" ] || [ ! -f "requirements.txt" ]; then
+    print_step "检测到不在项目目录中，正在克隆项目..."
+    
+    # 创建临时目录
+    TEMP_DIR=$(mktemp -d)
+    cd "$TEMP_DIR"
+    
+    # 克隆项目
+    git clone https://github.com/fgfghfghft/host-management-system.git
+    cd host-management-system
+    
+    print_message "项目已克隆到: $(pwd)"
+else
+    print_message "已在项目目录中: $(pwd)"
+fi
+
+# 获取项目目录
 PROJECT_DIR=$(pwd)
 print_message "项目目录: $PROJECT_DIR"
 
@@ -68,13 +89,13 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Ubuntu/Debian
         print_message "检测到Ubuntu/Debian系统"
         sudo apt-get update
-        sudo apt-get install -y python3-venv python3-pip redis-server curl
+        sudo apt-get install -y python3-venv python3-pip redis-server curl git
         sudo systemctl start redis-server
         sudo systemctl enable redis-server
     elif command -v yum &> /dev/null; then
         # CentOS/RHEL
         print_message "检测到CentOS/RHEL系统"
-        sudo yum install -y python3 python3-pip redis
+        sudo yum install -y python3 python3-pip redis git
         sudo systemctl start redis
         sudo systemctl enable redis
     else
@@ -84,7 +105,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS
     print_message "检测到macOS系统"
     if command -v brew &> /dev/null; then
-        brew install python3 redis
+        brew install python3 redis git
         brew services start redis
     else
         print_warning "请先安装Homebrew: https://brew.sh/"
@@ -141,10 +162,7 @@ print_step "6. 创建管理员账号..."
 if python manage.py shell -c "from django.contrib.auth.models import User; print(User.objects.filter(is_superuser=True).exists())" 2>/dev/null | grep -q "True"; then
     print_warning "超级用户已存在，跳过创建"
 else
-    print_message "请创建管理员账号:"
-    echo "用户名: admin"
-    echo "邮箱: admin@example.com"
-    echo "密码: Admin123456"
+    print_message "创建管理员账号..."
     
     # 使用非交互方式创建超级用户
     python manage.py shell -c "
